@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-export type DatabaseConfig = {
+type DatabaseConfig = {
   host: string;
   port: number;
   database: string;
@@ -14,7 +14,7 @@ export type DatabaseConfig = {
 /**
  * 测试环境建议使用独立库，避免污染 dev/prod 数据
  */
-export const databaseConfig: DatabaseConfig = {
+const databaseConfig: DatabaseConfig = {
   host: process.env.DB_HOST ?? "127.0.0.1",
   port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
   database: process.env.DB_NAME ?? "ehr_test",
@@ -28,7 +28,7 @@ export const databaseConfig: DatabaseConfig = {
       : process.env.NODE_ENV === "test",
 };
 
-export const sequelize = new Sequelize(
+const sequelize = new Sequelize(
   databaseConfig.database,
   databaseConfig.username,
   databaseConfig.password,
@@ -40,3 +40,6 @@ export const sequelize = new Sequelize(
     logging: databaseConfig.logging ? console.log : false,
   },
 );
+
+export type { DatabaseConfig };
+export { databaseConfig, sequelize };

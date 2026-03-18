@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "rootDir": ".",
     "outDir": "dist",
     "esModuleInterop": true,
@@ -12,6 +12,6 @@
     "resolveJsonModule": true,
     "types": ["node"]
   },
-  "include": ["index.ts", "app/**/*.ts", "config/**/*.ts"],
-  "exclude": ["node_modules", "dist", "agent"]
+  "include": ["index.ts", "app/**/*.ts", "config/**/*.ts", "agent/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

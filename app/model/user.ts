@@ -1,12 +1,12 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import { sequelize } from "../../config/_index";
 
-export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: number;
   declare name: string;
   declare deptId: number;
   declare status: number;
-  declare avatar: string | null;
+  declare belongPlace: number;
   declare nickName: string | null;
 }
 
@@ -31,9 +31,10 @@ User.init(
       type: DataTypes.TINYINT,
       allowNull: false,
     },
-    avatar: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
+    belongPlace: {
+      type: DataTypes.TINYINT,
+      allowNull: false,
+      field: "belong_place",
     },
     nickName: {
       type: DataTypes.STRING(255),
@@ -48,3 +49,5 @@ User.init(
     underscored: false,
   },
 );
+
+export { User };

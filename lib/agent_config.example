@@ -1,0 +1,11 @@
+export type AgentConfig = {
+  modelName: string;
+  apiKey: string;
+  baseUrl: string;
+};
+
+export const deepseekConfig: AgentConfig = {
+  modelName: "deepseek-chat",
+  apiKey: "从官网获取的KEY",
+  baseUrl: "https://api.deepseek.com",
+};

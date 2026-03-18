@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 
-export class HttpError extends Error {
+class HttpError extends Error {
   status: number;
   details?: unknown;
 
@@ -11,7 +11,7 @@ export class HttpError extends Error {
   }
 }
 
-export function errorHandler(err: unknown, _req: Request, res: Response, _next: NextFunction) {
+function errorHandler(err: unknown, _req: Request, res: Response, _next: NextFunction) {
   const e = err as any;
   const status = typeof e?.status === "number" ? e.status : 500;
   const message = typeof e?.message === "string" ? e.message : "Internal Server Error";
@@ -22,3 +22,5 @@ export function errorHandler(err: unknown, _req: Request, res: Response, _next: 
     details: e?.details,
   });
 }
+
+export { HttpError, errorHandler };

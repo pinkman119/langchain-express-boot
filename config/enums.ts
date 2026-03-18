@@ -1,4 +1,4 @@
-export class Enum<T extends string | number | boolean> {
+class Enum<T extends string | number | boolean> {
   public value: T;
   public key: string;
   constructor(name: string, value: T) {
@@ -16,7 +16,7 @@ export class Enum<T extends string | number | boolean> {
 /**
  * 全局枚举（与环境无关）
  */
-export const enums = {
+const enums = {
   USER: {
     STATUS: {
       RESIGNED: new Enum<number>("已离职", 0),
@@ -24,3 +24,5 @@ export const enums = {
     },
   },
 } as const;
+
+export { Enum, enums };

@@ -5,3 +5,7 @@ docs
 node_modules
 package-lock.json
 dist
+# agent的apiKey不推送git
+config/dev/agent_config.ts
+config/prod/agent_config.ts
+config/test/agent_config.ts

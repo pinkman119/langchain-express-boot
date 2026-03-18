@@ -6,12 +6,11 @@ import { User } from "./user";
 User.belongsTo(Dept, { foreignKey: "deptId", as: "dept" });
 Dept.hasMany(User, { foreignKey: "deptId", as: "users" });
 
-export async function initDb() {
+async function initDb() {
   await sequelize.authenticate();
 
-  // 默认不做自动建表/改表，避免影响已有数据库
-  // 如需让 Sequelize 按模型创建表，可手动开启：
-  // await sequelize.sync({ alter: false });
+  // 用sequelize的sync方法判断当前表不存在则自动建表
+  await sequelize.sync({ force: false });
 }
 
-export { sequelize, Dept, User };
+export { Dept, User, initDb, sequelize };

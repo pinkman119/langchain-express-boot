@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-export type DatabaseConfig = {
+type DatabaseConfig = {
   host: string;
   port: number;
   database: string;
@@ -11,7 +11,7 @@ export type DatabaseConfig = {
   logging?: boolean;
 };
 
-export const databaseConfig: DatabaseConfig = {
+const databaseConfig: DatabaseConfig = {
   host: "127.0.0.1",
   port: 3306,
   database: "ehr_dev",
@@ -27,7 +27,7 @@ export const databaseConfig: DatabaseConfig = {
 };
 
 // Sequelize instance
-export const sequelize = new Sequelize(
+const sequelize = new Sequelize(
   databaseConfig.database,
   databaseConfig.username,
   databaseConfig.password,
@@ -39,3 +39,6 @@ export const sequelize = new Sequelize(
     logging: databaseConfig.logging ? console.log : false,
   },
 );
+
+export type { DatabaseConfig };
+export { databaseConfig, sequelize };

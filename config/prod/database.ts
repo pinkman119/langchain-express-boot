@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 
-export type DatabaseConfig = {
+// 定义数据库环境配置
+type DatabaseConfig = {
   host: string;
   port: number;
   database: string;
@@ -11,11 +12,8 @@ export type DatabaseConfig = {
   logging?: boolean;
 };
 
-/**
- * 生产环境建议通过环境变量注入：
- * - DB_HOST / DB_PORT / DB_NAME / DB_USER / DB_PASS
- */
-export const databaseConfig: DatabaseConfig = {
+// 配置数据库环境
+const databaseConfig: DatabaseConfig = {
   host: process.env.DB_HOST ?? "127.0.0.1",
   port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
   database: process.env.DB_NAME ?? "ehr_prod",
@@ -26,7 +24,8 @@ export const databaseConfig: DatabaseConfig = {
   logging: process.env.DB_LOGGING?.toLowerCase() === "true",
 };
 
-export const sequelize = new Sequelize(
+// 创建sequelize实例
+const sequelize = new Sequelize(
   databaseConfig.database,
   databaseConfig.username,
   databaseConfig.password,
@@ -38,3 +37,6 @@ export const sequelize = new Sequelize(
     logging: databaseConfig.logging ? console.log : false,
   },
 );
+
+export type { DatabaseConfig };
+export { databaseConfig, sequelize };

@@ -39,7 +39,7 @@ CREATE TABLE `tbl_user`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户姓名',
   `dept_id` int NOT NULL COMMENT '部门id',
   `status` tinyint NOT NULL COMMENT '用户状态',
-  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '头像',
+  `belongPlace` tinyint NOT NULL COMMENT '归属地',
   `nick_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '昵称',
   PRIMARY KEY (`id` DESC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;

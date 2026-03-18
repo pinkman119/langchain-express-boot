@@ -3,7 +3,7 @@
 基于“约定优于配置”思想，结合langchain.js框架和express.js框架打造的快速开发boot启动模板
 
 # 自动格式化
-
+1. 配置.VSCODE配置
 ```
 {
   "editor.formatOnSave": true,
@@ -20,6 +20,8 @@
     "source.fixAll.eslint": "always"
   }
 }
+2. 安装eslint printer插件
+3. 设置保存时自动
 
 ```
 

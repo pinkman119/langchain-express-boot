@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { HttpError } from "../middleware/error_handler";
-import { createDept, deleteDept, getDept, listDepts, updateDept } from "../service/dept.service";
+import { createDept, deleteDept, getDept, listDepts, updateDept } from "../service/dept";
 
 function numParam(req: Request, name: string): number {
   const n = Number(req.params[name]);
@@ -8,18 +8,18 @@ function numParam(req: Request, name: string): number {
   return n;
 }
 
-export async function deptList(req: Request, res: Response) {
+async function deptList(req: Request, res: Response) {
   const data = await listDepts();
   res.json({ success: true, data });
 }
 
-export async function deptGet(req: Request, res: Response) {
+async function deptGet(req: Request, res: Response) {
   const id = numParam(req, "id");
   const data = await getDept(id);
   res.json({ success: true, data });
 }
 
-export async function deptCreate(req: Request, res: Response) {
+async function deptCreate(req: Request, res: Response) {
   const body = req.body ?? {};
   const parentId = body.parentId ?? body.parent_id;
   const pathIds = body.pathIds ?? body.path_ids;
@@ -46,15 +46,17 @@ export async function deptCreate(req: Request, res: Response) {
   res.status(201).json({ success: true, data });
 }
 
-export async function deptUpdate(req: Request, res: Response) {
+async function deptUpdate(req: Request, res: Response) {
   const id = numParam(req, "id");
   const body = req.body ?? {};
   const data = await updateDept(id, body);
   res.json({ success: true, data });
 }
 
-export async function deptDelete(req: Request, res: Response) {
+async function deptDelete(req: Request, res: Response) {
   const id = numParam(req, "id");
   const data = await deleteDept(id);
   res.json({ success: true, data });
 }
+
+export { deptCreate, deptDelete, deptGet, deptList, deptUpdate };
