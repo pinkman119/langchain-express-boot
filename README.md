@@ -1,6 +1,6 @@
 # langchain-express-boot
 
-基于“约定优于配置”思想，结合 LangChain.js 与 Express.js 打造的 TypeScript 后端启动模板，内置 Sequelize（MySQL）、Agent 调用能力与基础工程化配置。
+基于“约定优于配置”思想，结合 LangChain.js 与 Express.js 打造的 TypeScript 后端启动模板，内置 Sequelize（MySQL）、Agent 调用能力与基础工程化配置。项目组成：60%人工智能 + 40%智能人工
 
 ## 1 系统简介
 
@@ -158,4 +158,79 @@ npm run dev:prod
 npm run dev:test
 // 生产环境
 npm run start
+```
+
+## 4 启动测试
+
+### 4.1 天气助手
+
+你可以询问当前agent某个员工那边的天气，agent根据语义分解对应员工昵称，并根据员工所在归属地查询员工所处工作地点的天气情况：
+
+0. 执行SQL：
+
+```
+INSERT INTO `tbl_user` VALUES (1, '李佳薇', 1, 1, 1, '小李');
+INSERT INTO `tbl_user` VALUES (2, '李明星', 1, 1, 2, '星星');
+```
+
+1. 执行http请求：
+
+```
+POST | http://localhost:3000/api/users/weather-by-message
+{
+  "message": "小李那边天气怎么样？"
+}
+```
+
+2. 返回结果：
+
+```
+{
+    "success": true,
+    "data": {
+        "nickName": "小李",
+        "city": "北京",
+        "weatherMessage": "根据查询结果，北京当前的天气情况是：\n- **温度**：25°C\n- **天气状况**：🌤️ 多云\n\n这是一个比较舒适的温度，适合外出活动。"
+    }
+}
+```
+
+3. 继续请求：
+
+```
+POST | http://localhost:3000/api/users/weather-by-message
+{
+  "message": "星星呢？"
+}
+```
+
+4. 返回结果
+
+```
+{
+    "success": true,
+    "data": {
+        "nickName": "星星",
+        "city": "上海",
+        "weatherMessage": "上海现在的天气是多云，温度为25°C。"
+    }
+}
+```
+
+5. 测试不存在数据库的员工：
+
+```
+POST | http://localhost:3000/api/users/weather-by-message
+{
+  "message": "最后我想问一下vivi那边怎么说"
+}
+```
+
+6. 返回结果
+
+```
+{
+    "success": false,
+    "message": "user not found"
+}
 ```
