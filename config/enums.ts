@@ -18,6 +18,12 @@ class Enum<T extends string | number | boolean> {
  */
 const enums = {
   USER: {
+    BELONG_PLACE_TO_CITY: {
+      BEIJING: new Enum<number>("北京", 1),
+      SHANGHAI: new Enum<number>("上海", 2),
+      GUANGZHOU: new Enum<number>("广州", 3),
+      SHENZHEN: new Enum<number>("深圳", 4),
+    },
     STATUS: {
       RESIGNED: new Enum<number>("已离职", 0),
       EMPLOYED: new Enum<number>("在职", 1),

@@ -1,5 +1,7 @@
 import { Dept, User } from "../model/_index";
 import { HttpError } from "../middleware/error_handler";
+import { enums } from "../../config/enums";
+import { extractEmployeeNickName, getWeatherByCity } from "../../agent/service/weather";
 
 type UserCreateInput = {
   id: number;
@@ -57,5 +59,37 @@ async function deleteUser(id: number) {
   return { deleted: true };
 }
 
+async function getWeatherByMessage(message: string): Promise<{
+  nickName: string;
+  city: string;
+  weatherMessage: string;
+}> {
+  const nickName = (await extractEmployeeNickName(message))?.trim() ?? "";
+  if (!nickName) {
+    throw new HttpError(400, "could not extract employee nickname");
+  }
+  const user = await User.findOne({ where: { nickName } });
+  if (!user) {
+    throw new HttpError(404, "user not found");
+  }
+  const belongPlace = Number(user.belongPlace);
+  const entry = Object.values(enums.USER.BELONG_PLACE_TO_CITY).find(
+    (e) => (e as { value: number }).value === belongPlace,
+  );
+  const city = entry && typeof (entry as { getKey: () => string }).getKey === "function"
+    ? (entry as { getKey: () => string }).getKey()
+    : "";
+  if (!city) {
+    throw new HttpError(400, `belong_place ${belongPlace} has no city mapping`);
+  }
+  let weatherMessage: string;
+  try {
+    weatherMessage = await getWeatherByCity(city);
+  } catch {
+    throw new HttpError(502, "weather service unavailable");
+  }
+  return { nickName, city, weatherMessage };
+}
+
 export type { UserCreateInput, UserUpdateInput };
-export { createUser, deleteUser, getUser, listUsers, updateUser };
+export { createUser, deleteUser, getWeatherByMessage, getUser, listUsers, updateUser };

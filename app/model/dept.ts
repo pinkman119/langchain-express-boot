@@ -1,4 +1,4 @@
-﻿import { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
+import { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import { sequelize } from "../../config/_index";
 
 class Dept extends Model<InferAttributes<Dept>, InferCreationAttributes<Dept>> {
@@ -6,7 +6,7 @@ class Dept extends Model<InferAttributes<Dept>, InferCreationAttributes<Dept>> {
   declare name: string;
   declare parentId: number;
   declare pathIds: number[]; // json: [1,2,3]
-  declare pathNames: string[]; // json: ["閮ㄩ棬","缁?,"鐝?]
+  declare pathNames: string[]; // json: ["部门","组","班"]
 }
 
 Dept.init(

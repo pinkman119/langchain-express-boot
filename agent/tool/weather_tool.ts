@@ -1,4 +1,4 @@
-﻿import { DynamicTool, DynamicStructuredTool, tool } from "langchain";
+import { DynamicTool, DynamicStructuredTool, tool } from "langchain";
 import { z } from "zod";
 
 const getWeatherDynamicTool = new DynamicTool({

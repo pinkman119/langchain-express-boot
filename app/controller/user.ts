@@ -1,12 +1,14 @@
 import type { Request, Response } from "express";
 import { HttpError } from "../middleware/error_handler";
-import { createUser, deleteUser, getUser, listUsers, updateUser } from "../service/user";
-
-function numParam(req: Request, name: string): number {
-  const n = Number(req.params[name]);
-  if (!Number.isFinite(n)) throw new HttpError(400, `invalid param: ${name}`);
-  return n;
-}
+import {
+  createUser,
+  deleteUser,
+  getWeatherByMessage,
+  getUser,
+  listUsers,
+  updateUser,
+} from "../service/user";
+import { numParam } from "../../utils/tools";
 
 async function userList(req: Request, res: Response) {
   const data = await listUsers();
@@ -50,4 +52,13 @@ async function userDelete(req: Request, res: Response) {
   res.json({ success: true, data });
 }
 
-export { userCreate, userDelete, userGet, userList, userUpdate };
+async function userWeatherByMessage(req: Request, res: Response) {
+  const message = req.body?.message;
+  if (message == null || (typeof message === "string" && !message.trim())) {
+    throw new HttpError(400, "message is required");
+  }
+  const data = await getWeatherByMessage(String(message).trim());
+  res.json({ success: true, data });
+}
+
+export { userCreate, userDelete, userGet, userList, userUpdate, userWeatherByMessage };

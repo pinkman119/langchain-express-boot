@@ -1,11 +1,19 @@
 import { Router } from "express";
-import { userCreate, userDelete, userGet, userList, userUpdate } from "../controller/user";
+import {
+  userCreate,
+  userDelete,
+  userGet,
+  userList,
+  userUpdate,
+  userWeatherByMessage,
+} from "../controller/user";
 
 function userRouter() {
   const r = Router();
 
   r.get("/", wrap(userList));
   r.get("/:id", wrap(userGet));
+  r.post("/weather-by-message", wrap(userWeatherByMessage));
   r.post("/", wrap(userCreate));
   r.patch("/:id", wrap(userUpdate));
   r.delete("/:id", wrap(userDelete));
