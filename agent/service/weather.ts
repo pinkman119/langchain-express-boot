@@ -26,7 +26,10 @@ async function getWeatherByCity(city: string): Promise<string> {
     middleware: [],
   });
   const result = await weatherAgent.invoke({
-    messages: [{ role: "user", content: `查询${city}的天气` }],
+    messages: [
+      { role: "system", content: `你是一个天气预报员，请根据用户输入的city查询天气` },
+      { role: "user", content: `查询${city}的天气` },
+    ],
   });
   const messages = result.messages as any[];
   if (!Array.isArray(messages) || messages.length === 0) return "";
