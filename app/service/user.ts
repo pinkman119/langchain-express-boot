@@ -1,7 +1,7 @@
 import { Dept, User } from "../model/_index";
 import { HttpError } from "../middleware/error_handler";
 import { enums } from "../../config/enums";
-import { extractEmployeeNickName, getWeatherByCity } from "../../agent/service/weather";
+import { extractEmployeeNickName, getWeatherByCity } from "../../agent/skill/weather";
 
 type UserCreateInput = {
   id: number;
@@ -76,9 +76,10 @@ async function getWeatherByMessage(message: string): Promise<{
   const entry = Object.values(enums.USER.BELONG_PLACE_TO_CITY).find(
     (e) => (e as { value: number }).value === belongPlace,
   );
-  const city = entry && typeof (entry as { getKey: () => string }).getKey === "function"
-    ? (entry as { getKey: () => string }).getKey()
-    : "";
+  const city =
+    entry && typeof (entry as { getKey: () => string }).getKey === "function"
+      ? (entry as { getKey: () => string }).getKey()
+      : "";
   if (!city) {
     throw new HttpError(400, `belong_place ${belongPlace} has no city mapping`);
   }
